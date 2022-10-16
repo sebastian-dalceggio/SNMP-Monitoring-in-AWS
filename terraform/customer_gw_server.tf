@@ -54,37 +54,6 @@ resource "aws_security_group" "customer_gw_security_group" {
     to_port     = 0
   }
 
-  # ingress {
-  #   cidr_blocks = [var.cloud_vpc_cidr_block, var.on_premise_vpc_cidr_block]
-  #   description = "TCP access"
-  #   from_port   = 0
-  #   protocol    = "tcp"
-  #   to_port     = 65535
-  # }
-
-  # ingress {
-  #   cidr_blocks = [var.cloud_vpc_cidr_block, var.on_premise_vpc_cidr_block]
-  #   description = "UDP access"
-  #   from_port   = 0
-  #   protocol    = "udp"
-  #   to_port     = 65535
-  # }
-
-  # ingress {
-  #   cidr_blocks = [var.cloud_vpc_cidr_block, var.on_premise_vpc_cidr_block]
-  #   description = "PING access"
-  #   from_port   = -1
-  #   protocol    = "icmp"
-  #   to_port     = -1
-  # }
-
-  # egress {
-  #   cidr_blocks = ["0.0.0.0/0"]
-  #   from_port   = 0
-  #   protocol    = "-1"
-  #   to_port     = 0
-  # }
-
   tags = {
     Name    = "customer_gw_security_group"
     Project = "SNMP Monitoring"
