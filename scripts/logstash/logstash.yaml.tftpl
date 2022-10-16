@@ -1,0 +1,42 @@
+#cloud-config
+write_files:
+  - path: /etc/logstash/conf.d/battery_capacity.conf
+    owner: root:root
+    encoding: base64
+    permissions: '0777'
+    content: "${base64encode(battery_capacity_conf)}"
+  - path: /etc/logstash/conf.d/load_current.conf
+    owner: root:root
+    encoding: base64
+    permissions: '0777'
+    content: "${base64encode(load_current_conf)}"
+  - path: /etc/logstash/conf.d/temperature.conf
+    owner: root:root
+    encoding: base64
+    permissions: '0777'
+    content: "${base64encode(temperature_conf)}"
+  - path: /etc/logstash/conf.d/voltage.conf
+    owner: root:root
+    encoding: base64
+    permissions: '0777'
+    content: "${base64encode(voltage_conf)}"
+  - path: /tmp/pipelines.yml
+    owner: root:root
+    encoding: base64
+    permissions: '0777'
+    content: "${base64encode(pipelines_yml)}"
+runcmd:
+  - |
+    wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+  - |
+    sudo apt-get install apt-transport-https
+  - |
+    echo "deb https://artifacts.elastic.co/packages/8.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-8.x.list
+  - |
+    sudo apt-get update && sudo apt-get install logstash
+  - |
+    sudo apt install snmp -y
+  - |
+    sudo cp /tmp/pipelines.yml /etc/logstash/pipelines.yml
+  - |
+    sudo systemctl start logstash.service

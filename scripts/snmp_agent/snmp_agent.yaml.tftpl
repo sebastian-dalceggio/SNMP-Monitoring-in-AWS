@@ -1,0 +1,17 @@
+#cloud-config
+packages:
+  - snmpd
+write_files:
+  - path: /etc/snmp/eltek.sh
+    owner: root:root
+    encoding: base64
+    permissions: '0777'
+    content: "${base64encode(snmp_agent_eltek_sh)}"
+  - path: /etc/snmp/snmpd.conf
+    owner: root:root
+    encoding: base64
+    permissions: '0777'
+    content: "${base64encode(snmp_agent_snmpd_conf)}"
+runcmd:
+  - |
+    sudo service snmpd --full-restart"

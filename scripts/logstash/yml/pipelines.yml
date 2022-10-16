@@ -1,0 +1,4 @@
+- pipeline.id: bc_pipeline
+  path.config: "/etc/logstash/conf.d/battery_capacity.conf"
+- pipeline.id: lc_pipeline
+  path.config: "/etc/logstash/conf.d/load_current.conf"
