@@ -6,7 +6,7 @@ This project shows how to create an snmp monitoring system on AWS. The snmp devi
 
 To simulate the On Premise network we use a VPC with an EC2 instance where Openswan is installed, which implements the Internet Protocol Security (IPsec). This instance is used as the customer gateway.
 
-In the On Premise network there are five EC2s simulating five Eltek DC Power Plants. They receive and respond to SNMP requests.
+In the On Premise network there are four EC2s simulating four Eltek DC Power Plants. They receive and respond to SNMP requests.
 
 This project is fully automated, so you only need to run terraform apply with the correct aws credentials.
 

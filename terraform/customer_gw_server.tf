@@ -3,7 +3,8 @@ resource "aws_instance" "customer_gw_server" {
   instance_type          = "t2.micro"
   availability_zone      = var.availability_zones[0]
   key_name               = var.key_name
-  vpc_security_group_ids = [aws_security_group.customer_gw_security_group.id]
+  vpc_security_group_ids = [aws_security_group.customer_gw_security_group.id,
+                            aws_security_group.on_premise_security_group.id]
   subnet_id              = aws_subnet.on_premise_public_subnet_1.id
   source_dest_check      = false
   tags = {
@@ -40,4 +41,53 @@ resource "null_resource" "cgw_setup" {
     aws_vpn_connection.vpn,
     aws_instance.customer_gw_server
   ]
+}
+
+resource "aws_security_group" "customer_gw_security_group" {
+  name   = "customer_gw_security_group"
+  vpc_id = aws_vpc.on_premise_vpc.id
+
+  ingress {
+    cidr_blocks = ["${chomp(data.http.myip.body)}/32"]
+    from_port   = 0
+    protocol    = "-1"
+    to_port     = 0
+  }
+
+  # ingress {
+  #   cidr_blocks = [var.cloud_vpc_cidr_block, var.on_premise_vpc_cidr_block]
+  #   description = "TCP access"
+  #   from_port   = 0
+  #   protocol    = "tcp"
+  #   to_port     = 65535
+  # }
+
+  # ingress {
+  #   cidr_blocks = [var.cloud_vpc_cidr_block, var.on_premise_vpc_cidr_block]
+  #   description = "UDP access"
+  #   from_port   = 0
+  #   protocol    = "udp"
+  #   to_port     = 65535
+  # }
+
+  # ingress {
+  #   cidr_blocks = [var.cloud_vpc_cidr_block, var.on_premise_vpc_cidr_block]
+  #   description = "PING access"
+  #   from_port   = -1
+  #   protocol    = "icmp"
+  #   to_port     = -1
+  # }
+
+  # egress {
+  #   cidr_blocks = ["0.0.0.0/0"]
+  #   from_port   = 0
+  #   protocol    = "-1"
+  #   to_port     = 0
+  # }
+
+  tags = {
+    Name    = "customer_gw_security_group"
+    Project = "SNMP Monitoring"
+    Network = "On-premise"
+  }
 }

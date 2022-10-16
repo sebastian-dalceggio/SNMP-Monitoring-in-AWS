@@ -13,5 +13,4 @@ write_files:
     permissions: '0777'
     content: "${base64encode(snmp_agent_snmpd_conf)}"
 runcmd:
-  - |
-    sudo service snmpd --full-restart"
+  - sudo service snmpd --full-restart"
