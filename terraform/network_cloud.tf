@@ -8,13 +8,13 @@ resource "aws_vpc" "cloud_vpc" {
   }
 }
 
-resource "aws_subnet" "cloud_public_subnet_1" {
+resource "aws_subnet" "cloud_private_subnet_1" {
   cidr_block              = cidrsubnet(var.cloud_vpc_cidr_block, 8, 0)
   vpc_id                  = aws_vpc.cloud_vpc.id
   availability_zone       = var.availability_zones[0]
   map_public_ip_on_launch = true
   tags = {
-    Name    = "cloud_public_subnet_1"
+    Name    = "cloud_private_subnet_1"
     Project = "SNMP Monitoring"
     Network = "On-premise"
   }
@@ -29,27 +29,27 @@ resource "aws_internet_gateway" "cloud_vpc_igw_main" {
   }
 }
 
-resource "aws_route_table" "cloud_public_route_table" {
+resource "aws_route_table" "cloud_private_route_table" {
   vpc_id = aws_vpc.cloud_vpc.id
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.cloud_vpc_igw_main.id
   }
   tags = {
-    Name    = "cloud_public_route_table"
+    Name    = "cloud_private_route_table"
     Project = "SNMP Monitoring"
     Network = "On-premise"
   }
 }
 
-resource "aws_route_table_association" "cloud_public_subnet_route_table_association" {
-  subnet_id      = aws_subnet.cloud_public_subnet_1.id
-  route_table_id = aws_route_table.cloud_public_route_table.id
+resource "aws_route_table_association" "cloud_private_subnet_route_table_association" {
+  subnet_id      = aws_subnet.cloud_private_subnet_1.id
+  route_table_id = aws_route_table.cloud_private_route_table.id
 }
 
-resource "aws_vpn_gateway_route_propagation" "vpn_gateway_route_propagation2" {
+resource "aws_vpn_gateway_route_propagation" "vpn_gateway_route_propagation_private" {
   vpn_gateway_id = aws_vpn_gateway.vpn_gw.id
-  route_table_id = aws_route_table.cloud_public_route_table.id
+  route_table_id = aws_route_table.cloud_private_route_table.id
 }
 
 resource "aws_security_group" "cloud_vpc_security_group" {

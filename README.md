@@ -20,14 +20,14 @@ This project is fully automated, so you only need to run terraform apply with th
 
 ### Limitations
 - To simulate the on premises server we use an vpc with an EC2 instance running an openswan server.
-- Since the account used does not have permissions to create a custom AMI, it was necessary connect the logstash server to the Internet to install all the packages. With the correct permissions it is best to use a custom AMI and install it on a private subnet.
+- Since the account used does not have permissions to create a custom AMI, it was necessary connect the logstash server and the SNMP agents to the Internet to install all the packages. Therefore, private subnets are de facto public. With the correct permissions it is best to use a custom AMI and install it on a private subnet.
 
 ### Used tools
 - Terraform
 - Python
 - Logstash
 - AWS
-
+- bash
 
 ## Details
 

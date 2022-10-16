@@ -7,7 +7,7 @@ resource "aws_instance" "snmp_agents" {
   key_name          = var.key_name
   private_ip        = var.snmp_agents_ips[count.index]
   vpc_security_group_ids = [aws_security_group.on_premise_security_group.id]
-  subnet_id              = aws_subnet.on_premise_public_subnet_1.id
+  subnet_id              = aws_subnet.on_premise_private_subnet_1.id
   user_data              = data.cloudinit_config.snmp_agent.rendered
   tags = {
     Name    = "snmp_agent_${count.index + 1}"

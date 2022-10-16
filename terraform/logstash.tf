@@ -4,7 +4,7 @@ resource "aws_instance" "logstash_server" {
   availability_zone      = var.availability_zones[0]
   key_name               = var.key_name
   vpc_security_group_ids = [aws_security_group.cloud_vpc_security_group.id]
-  subnet_id              = aws_subnet.cloud_public_subnet_1.id
+  subnet_id              = aws_subnet.cloud_private_subnet_1.id
   user_data              = data.cloudinit_config.logstash_server.rendered
   iam_instance_profile   = aws_iam_instance_profile.logstash_profile.name
   tags = {

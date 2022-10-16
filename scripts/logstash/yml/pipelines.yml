@@ -2,3 +2,7 @@
   path.config: "/etc/logstash/conf.d/battery_capacity.conf"
 - pipeline.id: lc_pipeline
   path.config: "/etc/logstash/conf.d/load_current.conf"
+- pipeline.id: t_pipeline
+  path.config: "/etc/logstash/conf.d/temperature.conf"
+- pipeline.id: v_pipeline
+  path.config: "/etc/logstash/conf.d/voltage.conf"
