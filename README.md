@@ -48,6 +48,9 @@ We can see the metrics sent by logstash in the Namespace "SNMP_MONITORING".
 
 ## Sources
 
+GENERAL:
+ - https://aws.amazon.com/blogs/mt/snmp-monitoring-using-amazon-cloudwatch-and-elastic-logstash/
+ 
 VPN CONNECTION:
  - https://www.youtube.com/watch?v=5YvcyBecQts&t=1072s
  - https://www.youtube.com/watch?v=vfSsYBWyovQ
